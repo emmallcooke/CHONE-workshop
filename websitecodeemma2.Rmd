@@ -1,8 +1,8 @@
 ---
 title: "Emma Cooke"
 output:
-  html_document: default
   html_notebook: default
+  html_document: default
 ---
 
 ```{r load packages,message=FALSE,cache=TRUE,echo=FALSE}
@@ -17,7 +17,7 @@ I am working on CHONe project 1.2.1., because 1 is enough!
 
 I'm a Masters student at Memorial University in St, John's, NL. My supervisors are Paul Snelgrove and Bob Gregory.
 
-Here are NAFO Divisons 2J3KL and alllllllll of the strata.
+Here are NAFO Divisons 2J3KL and alllllllll of the strataaaa.
 
 ```{r prepare spatial data,cache=TRUE,echo=FALSE}
 # set standard projection
