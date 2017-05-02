@@ -1,0 +1,85 @@
+---
+title: "Emma Cooke"
+output: html_notebook
+---
+
+```{r load packages,message=FALSE,cache=TRUE,echo=FALSE}
+require(tidyverse)
+require(sf)
+require(leaflet)
+
+```
+
+
+I am working on CHONe project 1.2.1., because 1 is enough!
+
+I'm a Masters student at Memorial University in St, John's, NL. My supervisors are Paul Snelgrove and Bob Gregory.
+
+These are my offshore trawl locations....a whole lot of them.
+
+```{r prepare spatial data,cache=TRUE,echo=FALSE}
+# set standard projection
+projll <- "+proj=longlat +datum=WGS84"
+
+# set Divisions project
+Divisions <- read_sf("2J3KL_Divisions.shp") %>% 
+    st_transform(projll) %>% 
+    st_combine() %>% 
+    st_sf(name="Emma Cooke",
+         description="NAFODivisions",
+         CHONeProject="1.2.1.",
+         geometry=.)
+
+
+# set 2J Strata project
+JStrata <- read_sf("2J.shp") %>% 
+    st_transform(projll) %>% 
+    st_combine() %>% 
+    st_sf(name="Emma Cooke",
+         description="2J",
+         CHONeProject="1.2.1.",
+         geometry=.)
+
+# set 3K Strata project
+K3Strata <- read_sf("3K.shp") %>% 
+    st_transform(projll) %>% 
+    st_combine() %>% 
+    st_sf(name="Emma Cooke",
+         description="3K",
+         CHONeProject="1.2.1.",
+         geometry=.)
+
+# set 3L Strata project
+L3Strata <- read_sf("3L.shp") %>% 
+    st_transform(projll) %>% 
+    st_combine() %>% 
+    st_sf(name="Emma Cooke",
+         description="3L",
+         CHONeProject="1.2.1.",
+         geometry=.)
+
+
+# bind all my sites together
+sites <- rbind(Divisions, JStrata, K3Strata, L3Strata)
+
+```
+
+Here's MY map:
+
+```{r,echo=FALSE}
+cols <- RColorBrewer::brewer.pal(nrow(sites),"Dark2")
+
+leaflet(sites) %>%
+    addTiles() %>% 
+    addPolygons(group = ~description,
+                color = cols) %>%
+     addLegend("topright", 
+               colors = cols,
+               labels = unique(sites$description))
+    
+```
+
+And here's the raw data
+```{r,echo=FALSE}
+sites
+```
